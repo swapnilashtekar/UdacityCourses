@@ -32,5 +32,5 @@ features_train, features_test, labels_train, labels_test = preprocess()
 clf = GaussianNB()
 clf.fit(features_train, labels_train)
 
-y_true = clf.predict(features_test)
-print(accuracy_score(y_true, labels_test))
+labels_predicted = clf.predict(features_test)
+print(accuracy_score(labels_predicted, labels_test))
