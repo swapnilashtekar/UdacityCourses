@@ -6,6 +6,8 @@ import matplotlib.pyplot as plt
 import pickle
 
 from outlier_cleaner import outlierCleaner
+from sklearn.linear_model import LinearRegression
+import numpy as np
 
 
 ### load up some practice data with outliers in it
@@ -26,13 +28,18 @@ ages_train, ages_test, net_worths_train, net_worths_test = train_test_split(ages
 ### fill in a regression here!  Name the regression object reg so that
 ### the plotting code below works, and you can see what your regression looks like
 
+reg = LinearRegression()
+reg.fit(ages_train,net_worths_train)
+
+print " Slope is :" ,reg.coef_
 
 
+# The mean square error
+print("Test : Residual sum of squares: %.2f"
+    % np.mean((reg.predict(ages_test) - net_worths_test) ** 2))
 
-
-
-
-
+# Explained variance score: 1 is perfect prediction
+print('Test : Variance score: %.2f' % reg.score(ages_test, net_worths_test))
 
 
 
@@ -47,14 +54,13 @@ plt.show()
 ### identify and remove the most outlier-y points
 cleaned_data = []
 try:
+    #print "Debugging"
     predictions = reg.predict(ages_train)
     cleaned_data = outlierCleaner( predictions, ages_train, net_worths_train )
+    #print cleaned_data
 except NameError:
     print "your regression object doesn't exist, or isn't name reg"
     print "can't make predictions to use in identifying outliers"
-
-
-
 
 
 
@@ -77,6 +83,9 @@ if len(cleaned_data) > 0:
     plt.xlabel("ages")
     plt.ylabel("net worths")
     plt.show()
+    
+    print "Slope is : " ,reg.coef_
+    print "Score is : " ,reg.score(ages_test, net_worths_test)
 
 
 else:

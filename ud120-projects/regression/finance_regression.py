@@ -43,11 +43,7 @@ test_color = "r"
 ### "r" to differentiate training points from test points.
 
 reg = LinearRegression()
-reg.fit(feature_train, target_train)    
-
-reg.predict(feature_test)
-
-
+reg.fit(feature_train, target_train)
 
 print "Slope is :" ,reg.coef_
 print "Intercept is :",reg.intercept_
