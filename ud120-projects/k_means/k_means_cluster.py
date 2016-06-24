@@ -43,11 +43,76 @@ data_dict = pickle.load( open("../final_project/final_project_dataset.pkl", "r")
 ### there's an outlier--remove it! 
 data_dict.pop("TOTAL", 0)
 
+#Max and Min of Exercised Stock Options
+
+exercised_stock_options_list = []
+for key, value in data_dict.iteritems():
+    if(value['exercised_stock_options'] != 'NaN'):
+        exercised_stock_options_list.append(value['exercised_stock_options'])
+
+print "Exercised stock options : Minimum %s     Maximum %s" %(min(exercised_stock_options_list),max(exercised_stock_options_list))
+
+
+'''
+#Find maximum
+max_exercised_stock_options = 0
+
+for person_name in data_dict:
+    value = data_dict[person_name]['exercised_stock_options']
+    if(value != 'NaN'):
+        if(max_exercised_stock_options < value):
+            max_exercised_stock_options = value
+
+#Find minimum
+min_exercised_stock_options = max_exercised_stock_options
+
+for person_name in data_dict:
+    value = data_dict[person_name]['exercised_stock_options']
+    if(value != 'NaN'):
+        if(min_exercised_stock_options > value):
+            min_exercised_stock_options = value
+
+
+print "Exercised stock options : Minimum %s     Maximum %s" %(min_exercised_stock_options,max_exercised_stock_options)
+'''
+
+#Max and Min of Salary
+
+
+salary_list = []
+for key, value in data_dict.iteritems():
+    if(value['salary'] != 'NaN'):
+        salary_list.append(value['salary'])
+
+print "Salary : Minimum %s     Maximum %s" %(min(salary_list),max(salary_list))
+
+'''
+#Find maximum
+max_salary = 0
+
+for person_name in data_dict:
+    value = data_dict[person_name]['salary']
+    if(value != 'NaN'):
+        if(max_salary < value):
+            max_salary = value
+
+#Find minimum
+min_salary = max_salary
+
+for person_name in data_dict:
+    value = data_dict[person_name]['salary']
+    if(value != 'NaN'):
+        if(min_salary > value):
+            min_salary = value
+
+print "Salary : Minimum %s     Maximum %s" %(min_salary,max_salary)
+'''
 
 ### the input features we want to use 
 ### can be any key in the person-level dictionary (salary, director_fees, etc.) 
 feature_1 = "salary"
 feature_2 = "exercised_stock_options"
+feature_3 = "total_payments"
 poi  = "poi"
 features_list = [poi, feature_1, feature_2]
 data = featureFormat(data_dict, features_list )
@@ -65,6 +130,10 @@ plt.show()
 ### cluster here; create predictions of the cluster labels
 ### for the data and store them to a list called pred
 
+from sklearn.cluster import KMeans
+clf = KMeans(n_clusters=2)
+clf.fit(finance_features)
+pred = clf.predict(finance_features)
 
 
 
