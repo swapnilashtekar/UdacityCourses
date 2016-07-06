@@ -14,6 +14,8 @@ import sys
 sys.path.append("../tools/")
 from feature_format import featureFormat, targetFeatureSplit
 
+from sklearn.preprocessing import MinMaxScaler
+
 
 
 
@@ -42,6 +44,8 @@ def Draw(pred, features, poi, mark_poi=False, name="image.png", f1_name="feature
 data_dict = pickle.load( open("../final_project/final_project_dataset.pkl", "r") )
 ### there's an outlier--remove it! 
 data_dict.pop("TOTAL", 0)
+
+
 
 #Max and Min of Exercised Stock Options
 
@@ -116,6 +120,7 @@ feature_3 = "total_payments"
 poi  = "poi"
 features_list = [poi, feature_1, feature_2]
 data = featureFormat(data_dict, features_list )
+#MinMaxScaler(data)
 poi, finance_features = targetFeatureSplit( data )
 
 
